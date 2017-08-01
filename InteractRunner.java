@@ -9,20 +9,50 @@ public class InteractRunner{
 		Scanner reader = new Scanner(System.in);
 		try{
 			Calculator calc = new Calculator();
-			String exit = "no";
+			String exit = "no";	//значение выхода
+			String reuse = "no"; //использовать ли результат после вычисления
+			Double result = null;//значение результата
+			String first;	//значение после первого аргумента
 			while(!exit.equals("yes")){
-				System.out.println("Enter first arg: ");
-				String first = reader.next();
+				if(!reuse.equals("yes")){
+					System.out.println("Enter first arg : ");
+					first = reader.next();
+				}else 
+					first = String.valueOf(result);
 				System.out.println("Enter second arg: ");
 				String second = reader.next();
-				calc.add(Integer.valueOf(first),Integer.valueOf(second));
-				System.out.println("Result : " + calc.getResult());
+				System.out.println("Select action : +, -, *, /, ^");
+				String operation = reader.next();
+				switch(operation){
+					case "+":
+					calc.summa(Double.valueOf(first),Double.valueOf(second));
+					break;
+					case "-":
+					calc.razn(Double.valueOf(first),Double.valueOf(second));
+					break;
+					case "*":
+					calc.proizv(Double.valueOf(first),Double.valueOf(second));
+					break;
+					case "/":
+					calc.chastn(Double.valueOf(first),Double.valueOf(second));
+					break;
+					case "^":
+					calc.sqrt(Double.valueOf(first),Double.valueOf(second));
+					break;
+				}System.out.println("Result: " + calc.getResult());
+			System.out.println("Exit? yes/no");	
+			exit = reader.next();
+			if (!exit.equals("no")) break;
+			System.out.println("Use calculation result? yes/no");
+			reuse = reader.next();
+			if (!reuse.equals("yes"))
 				calc.cleanResult();
-				System.out.println("Exit yes/no ?");
-				exit = reader.next();
+			result = calc.getResult();
 			}
-		}finally{
+		
+		} finally {
 			reader.close();
 		}
+
 	}
 }
